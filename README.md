@@ -17,6 +17,9 @@ A build will be made of dozens of parts
   Each part is made of hundreds to thousands of slices
     Each slice has some associated data located inside a file.
     
-This script transforms the file arrangement to be in a folder hierarchy with CSV storage.
+This script transforms the file arrangement to be in a folder hierarchy with CSV storage. (HDF5 coming)
 
-Original versions were terrible with memory management but that's been alleviated in the uploaded version.
+TODO: Update to use HDF5 instead of CSV storage, and add a csv mode when run with that option. But preferably HDF5.
+        This will enable better computation and data analysis on the results, such as summary statistics, visualizations (histograms) or even 3-dimensional array visualizations.
+        
+        
