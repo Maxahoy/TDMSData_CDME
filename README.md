@@ -11,11 +11,11 @@ This is pretty understandable at a conceptual level but not very easy to machine
 For one, we can't easily grab multiple layers from one part; instead, we have to grab many parts.
 I'm going ahead and separating these manually.
 
-For visualization purposes, we would prefer to have:
+For visualization purposes, we would prefer to have a different file structure.
 
-A build will be made of dozens of parts
-  Each part is made of hundreds to thousands of slices
-    Each slice has some associated data located inside a file.
+\tA build will be made of dozens of parts
+  \t \tEach part is made of hundreds to thousands of slices
+    \t \t \tEach slice has some associated data located inside a file.
     
 This script transforms the file arrangement to be in a folder hierarchy with CSV storage. (HDF5 coming)
 
