@@ -4,15 +4,12 @@
 # call the function to build the whole fucking thing,
 # and call the function to delete unnecessary files.
 
-
 import sys
-
 """
 !{sys.executable} -m pip install nptdms
 !{sys.executable} -m pip install numpy
+!{sys.executable} -m pip install h5py
 """
-
-
 
 # At least on my system, requirements already satisfied.
 
@@ -27,9 +24,6 @@ import BuildingDirectories
 import WritingFiles
 import fileCleanup
 #import SummaryStatisticsOfParts
-
-
-startTime = time.time()
 
 # print("Example directory path: \nC:/Users/maxah/Documents/CDME/Sept 9 2019 TDMS Parts/TDMS\n")
 testPath = "C:\\Users\\maxah\\Documents\\CDME\\Sept 9 2019 TDMS Parts\\TDMS"
@@ -49,13 +43,14 @@ mode = "csv"
 while 'y' not in yesNoChar and 'Y' not in yesNoChar:
 
     # C:\\Users\\maxah\\Documents\\CDME\\Sept 9 2019 TDMS Parts\\TDMS
-    # /home/maxwell/Documents/CDME/TestDataATRQ
+    # /home/maxwell/Documents/CDME/TestDataATRQHome
+    # /home/maxwell/Documents/CDME/ATRQTestFolder
+    testPath = "/home/maxwell/Documents/CDME/TestEnv"
     if yesNoChar == 'n' or yesNoChar == "N":
         dir_path = input("Example path: " + "C:\\Users\\maxah\\Documents\\CDME\\Sept 9 2019 TDMS Parts\\TDMS" + "\n")
         if "testpath" in dir_path or "TESTPATH" in dir_path:
             dir_path = testPath
 
-    # dir_path = testPath
     root = os.path.abspath(os.sep)
     cwd = Path.cwd()
 
@@ -85,15 +80,28 @@ while 'y' not in yesNoChar and 'Y' not in yesNoChar:
 
     yesNoChar = input("If that is not the directory you want, hit 'n'. If that is the directory you want, hit 'y'.\n")
 
+taskName = ""
 print("What are you going to call this project?\nEX: \"Nov 21 Build TDMS\"")
-taskName = "Processed Stacks " + input("")
+if "testpath" in dir_path or "TESTPATH" in dir_path:
+    taskName = "TESTPATH Processed Stacks"
+else:
+    taskName = "Processed Stacks " + input("")
 sourceTDMSDirectory = Path(dir_path)
 
-"""
-print("What do you want the batch size to be?\nRecommended values: 5 or 10. Higher batch size means higher memory usage.")
-batchSize = int(input("Please enter a number: "))
 
-"""
+print("What do you want the mode to be? Press enter for 'csv' if not sure, otherwise type 'hdf5'.")
+mode = str(input("Mode: "))
+
+if 'h' in mode or 'H' in mode:
+    mode = "HDF5"
+    print("HDF5")
+elif 'c' in mode or 'C' in mode:
+    print("CSV")
+    mode = "CSV"
+
+
+startTime = time.time()
+
 batchSize = 1
 
 firstSliceNum = firstFileName[-6:-5]
@@ -101,19 +109,21 @@ firstSliceNum = firstFileName[-6:-5]
 # the data pieces I still need:
 
 # C:\\Users\\maxah\\Documents\\CDME\\Sept 9 2019 TDMS Parts\\TDMS
-# /home/maxwell/Documents/CDME/TestDataATRQ
+# /home/maxwell/Documents/CDME/TestDataATRQHome
 # /home/maxwell/Documents/CDME/ATRQTestFolder
-# /home/maxwell/Documents/CDME/TestEnv
+linux_test_path = "/home/maxwell/Documents/CDME/TestEnv"
+# building directories part
 
-# the next part is the building directories part
-
-folderDictionary = BuildingDirectories.buildDirectories(sourceTDMSDirectory, tdmsFiles, taskName)
+folderDictionary = BuildingDirectories.buildDirectories(sourceTDMSDirectory, tdmsFiles, taskName, mode)
 
 # def writeFiles(folderDictionary, tdmsFiles, sourceTDMSDirectory, numFiles, batchSize=1, firstSliceNum=1, mode="csv"):
-numLayers = WritingFiles.writeFiles(folderDictionary, tdmsFiles, sourceTDMSDirectory, len(fileNames), batchSize,
+numLayers = 0
+if mode is "HDF5":
+    #run the writeFilesHDF5 method
+    numLayers = WritingFiles.writeFilesHDF5(folderDictionary, tdmsFiles, sourceTDMSDirectory, len(fileNames), batchSize, firstSliceNum)
+elif mode is "CSV":
+    numLayers = WritingFiles.writeFilesCSV(folderDictionary, tdmsFiles, sourceTDMSDirectory, len(fileNames), batchSize,
                                     firstSliceNum)
-
-
 
 partsDeleted, partsRemaining = fileCleanup.cleanFiles(folderDictionary)
 
