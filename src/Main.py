@@ -90,12 +90,12 @@ sourceTDMSDirectory = Path(dir_path)
 
 
 print("What do you want the mode to be? Press enter for 'csv' if not sure, otherwise type 'hdf5'.")
-mode = str(input("Mode: "))
+modeString = str(input("Mode: "))
 
-if 'h' in mode or 'H' in mode:
+if 'h' in modeString or 'H' in modeString:
     mode = "HDF5"
     print("HDF5")
-elif 'c' in mode or 'C' in mode:
+else:
     print("CSV")
     mode = "CSV"
 
@@ -125,6 +125,7 @@ elif mode is "CSV":
     numLayers = WritingFiles.writeFilesCSV(folderDictionary, tdmsFiles, sourceTDMSDirectory, len(fileNames), batchSize,
                                     firstSliceNum)
 
+#TODO: make sure this works with hdf5 too
 partsDeleted, partsRemaining = fileCleanup.cleanFiles(folderDictionary)
 
 # input hold; causes the program to freeze before exiting.

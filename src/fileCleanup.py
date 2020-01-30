@@ -24,6 +24,12 @@ def cleanFiles(folderDictionary):
     partsRemaining = 0
     for k, v in folderDictionary.items():
         byteSize = get_size(v)
+        print(str(v))
+        print(str(v)[-5:])
+        if "hdf5" in v[-5:]:
+            lastSlash = v.rfind("/")
+            v = v[0:lastSlash]
+
         fileCount = count_files(v)
         minimumBytes = 62 * int(fileCount)  # 61 is the number of bytes contained in the headers.
         # If a folder has less than 62 bytes per file, then delete the folder.
@@ -34,8 +40,6 @@ def cleanFiles(folderDictionary):
             shutil.rmtree(v)
         else:
             partsRemaining = partsRemaining + 1
-
-    #print("PARTS REMAINING TEST " + str(partsDeleted) + " " + str(partsRemaining))
 
     return partsDeleted, partsRemaining
 
