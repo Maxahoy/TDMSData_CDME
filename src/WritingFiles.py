@@ -283,12 +283,12 @@ def writeFilesHDF5(destinationDictionary, tdmsFiles, sourceTDMSDirectory, numFil
                             #  otherwise create a dataset for each trait
                             if len(areaCol > 1):
                                 try:
-                                    areaData = sliceGroup.create_dataset("areaCol", data=areaCol)  # , areaCol)#, dtype=)
-                                    xData = sliceGroup.create_dataset("xCol", data=xCol)  # , xCol)#, dtype=)
-                                    yData = sliceGroup.create_dataset("yCol", data=yCol)#_dataset("yCol", exact=False)  # , yCol)#, dtype=)
-                                    paramData = sliceGroup.create_dataset("paramCol", data=paramCol)#exact=False)  # , paramCol)#, dtype=)
-                                    intensityCol = sliceGroup.create_dataset("intensityCol", data=intensityCol)#exact=False)  # , intensityCol)#, dtype=)
-                                    laserCol = sliceGroup.create_dataset("laserCol", data=laserCol)#exact=False)  # , laserCol)#, dtype=)
+                                    areaData = sliceGroup.create_dataset("areaCol", data=areaCol)
+                                    xData = sliceGroup.create_dataset("xCol", data=xCol)
+                                    yData = sliceGroup.create_dataset("yCol", data=yCol)
+                                    paramData = sliceGroup.create_dataset("paramCol", data=paramCol)
+                                    intensityCol = sliceGroup.create_dataset("intensityCol", data=intensityCol)
+                                    laserCol = sliceGroup.create_dataset("laserCol", data=laserCol)
                                 except Exception as ex:
                                     template = "An exception of type {0} occurred. Arguments:\n{1!r}"
                                     message = template.format(type(ex).__name__, ex.args)
@@ -299,7 +299,7 @@ def writeFilesHDF5(destinationDictionary, tdmsFiles, sourceTDMSDirectory, numFil
                 processTime = time.time() - processTime
                 # TODO: fix this because the times are incorrect again for some reason
                 print("\nTime for this batch was " + str(processTime) + " seconds.")
-                print("Or " + str(processTime / (sliceCounter - int(firstSliceNum) + 1)) + " seconds per layer. so far.\n")
+                print("Or " + str(processTime / (sliceCounter - int(firstSliceNum) + 1)) + " seconds per layer, so far.\n")
 
                 # end operation space
                 # this declaration clears the memory for the tdms objects

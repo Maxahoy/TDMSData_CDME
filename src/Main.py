@@ -96,7 +96,7 @@ if 'h' in modeString or 'H' in modeString:
     mode = "HDF5"
     print("HDF5")
 else:
-    print("Default Choice: CSV")
+    print("Default choice: CSV")
     mode = "CSV"
 
 

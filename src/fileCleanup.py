@@ -22,16 +22,23 @@ def count_files(start_path="."):
 def cleanFiles(folderDictionary):
     partsDeleted = 0
     partsRemaining = 0
+    minimumBytes = 0
+    mode = 'csv'
     for k, v in folderDictionary.items():
-        byteSize = get_size(v)
+
         print(str(v))
         print(str(v)[-5:])
         if "hdf5" in v[-5:]:
             lastSlash = v.rfind("/")
             v = v[0:lastSlash]
+            mode = "hdf5"
 
+        byteSize = get_size(v)
         fileCount = count_files(v)
-        minimumBytes = 62 * int(fileCount)  # 61 is the number of bytes contained in the headers.
+        if "c" in mode:
+            minimumBytes = 62 * int(fileCount)  # 61 is the number of bytes contained in the headers, if CSV
+        elif "h" in mode:
+            minimumBytes = 9024 * int(fileCount) + 1
         # If a folder has less than 62 bytes per file, then delete the folder.
         # Note: if there are some empty files in a folder, leave the entire thing for now.
         if byteSize < minimumBytes:
