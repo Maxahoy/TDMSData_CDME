@@ -47,7 +47,8 @@ while 'y' not in yesNoChar and 'Y' not in yesNoChar:
     # /home/maxwell/Documents/CDME/ATRQTestFolder
     testPath = "/home/maxwell/Documents/CDME/TestEnv"
     if yesNoChar == 'n' or yesNoChar == "N":
-        dir_path = input("Example path: " + "C:\\Users\\maxah\\Documents\\CDME\\Sept 9 2019 TDMS Parts\\TDMS" + "\n")
+        path_choice = input("Example path: " + "C:\\Users\\maxah\\Documents\\CDME\\Sept 9 2019 TDMS Parts\\TDMS" + "\n")
+        dir_path = path_choice
         if "testpath" in dir_path or "TESTPATH" in dir_path:
             dir_path = testPath
 
@@ -82,7 +83,7 @@ while 'y' not in yesNoChar and 'Y' not in yesNoChar:
 
 taskName = ""
 print("What are you going to call this project?\nEX: \"Nov 21 Build TDMS\"")
-if "testpath" in dir_path or "TESTPATH" in dir_path:
+if "testpath" in path_choice or "TESTPATH" in path_choice:
     taskName = "TESTPATH Processed Stacks"
 else:
     taskName = "Processed Stacks " + input("")
@@ -125,7 +126,7 @@ elif mode is "CSV":
     numLayers = WritingFiles.writeFilesCSV(folderDictionary, tdmsFiles, sourceTDMSDirectory, len(fileNames), batchSize,
                                     firstSliceNum)
 
-#TODO: make sure this works with hdf5 too
+
 partsDeleted, partsRemaining = fileCleanup.cleanFiles(folderDictionary)
 
 # input hold; causes the program to freeze before exiting.
