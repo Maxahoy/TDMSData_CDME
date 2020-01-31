@@ -19,7 +19,7 @@ A build will be made of dozens of parts
     
 This script transforms the file arrangement to be in a folder hierarchy with CSV or HDF5 storage.
 
-***USAGE INSTRUCTIONS***
+**USAGE INSTRUCTIONS**
 
 The repository linked contains a src folder and a README. Download the src folder or clone the repository to your local machine to use it.
 
@@ -37,13 +37,13 @@ After installing Pip: open your command line (On windows, run cmd.exe. On Linux,
 
 These three libraries are required. If these don’t work because you don’t have admin permissions, install locally by appending the --user flag to the commands.
 
-Ok, so I’ve got Python downloaded, the three libraries installed, and the src folder downloaded. What now?
+Ok, so I’ve got Python downloaded, the three libraries installed, and the src folder downloaded. ***What now?***
 
 Locate the folder of tdms files you want to transform. If they’re in a zip folder, extract them out of the archive.
 
 Run the “main.py” file in the src folder by right clicking & selecting “Run with IDLE”. Alternatively, start a command line, navigate to the folder with main.py, and run it in python with the commands python then Main.py.
 
-I’ve got it running, now what?
+***I’ve got it running, now what?***
 
 You will receive several prompts:
     
