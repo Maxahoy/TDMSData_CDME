@@ -137,6 +137,7 @@ endTime = time.time()
 runTime = endTime - startTime
 print("\n***FINISHED REPORT***")
 print("\n" + "Runtime was: " + str(runTime) + " seconds.")
+print("Or " + str(runTime / numLayers) + " seconds per layer.")
 print("Number of layers written was: " + str(numLayers) + " layers.")
 print("Number of parts with no data was: " + str(partsDeleted) + " parts.")
 print("Number of parts with data was: " + str(partsRemaining) + " parts.")
