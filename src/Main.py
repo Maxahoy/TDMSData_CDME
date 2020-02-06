@@ -18,7 +18,6 @@ from pprint import pprint
 import os
 from os import walk
 from pathlib import Path
-import shutil
 
 import BuildingDirectories
 import WritingFiles
@@ -40,12 +39,14 @@ tdmsFiles = []
 
 mode = "csv"
 
+testPath = "/home/maxwell/Documents/CDME/TestEnv"
+
 while 'y' not in yesNoChar and 'Y' not in yesNoChar:
 
     # C:\\Users\\maxah\\Documents\\CDME\\Sept 9 2019 TDMS Parts\\TDMS
     # /home/maxwell/Documents/CDME/TestDataATRQHome
     # /home/maxwell/Documents/CDME/ATRQTestFolder
-    testPath = "/home/maxwell/Documents/CDME/TestEnv"
+
     if yesNoChar == 'n' or yesNoChar == "N":
         path_choice = input("Example path: " + "C:\\Users\\maxah\\Documents\\CDME\\Sept 9 2019 TDMS Parts\\TDMS" + "\n")
         dir_path = path_choice
@@ -127,7 +128,11 @@ elif mode is "CSV":
                                     firstSliceNum)
 
 
-partsDeleted, partsRemaining = fileCleanup.cleanFiles(folderDictionary)
+partsDeleted, partsRemaining, newFolderDict = FileCleanup.cleanFolders(folderDictionary)
+
+# UPDATE: THIS IS AN EXPERIMENTAL FEATURE. MIGHT BREAK SHIT.
+if mode is "CSV":
+    FileCleanup.cleanSlices(newFolderDict)
 
 # input hold; causes the program to freeze before exiting.
 # Boom: now it only keeps those which have items inside.
@@ -141,7 +146,6 @@ print("Or " + str(runTime / numLayers) + " seconds per layer.")
 print("Number of layers written was: " + str(numLayers) + " layers.")
 print("Number of parts with no data was: " + str(partsDeleted) + " parts.")
 print("Number of parts with data was: " + str(partsRemaining) + " parts.")
-#print("Parts with data: ")
 
 exit = input("Finished: type the X key to exit.")
 time.sleep(.01)

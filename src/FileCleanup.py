@@ -1,5 +1,6 @@
 import shutil
 import os
+from os import walk
 
 
 def get_size(start_path='.'):
@@ -19,15 +20,16 @@ def count_files(start_path="."):
     return len(os.listdir(start_path))
 
 
-def cleanFiles(folderDictionary):
+def cleanFolders(folderDictionary):
     partsDeleted = 0
     partsRemaining = 0
     minimumBytes = 0
+    newFolderDict = dict()
     mode = 'csv'
     for k, v in folderDictionary.items():
 
-        print(str(v))
-        print(str(v)[-5:])
+        #print(str(v))
+        #print(str(v)[-5:])
         if "hdf5" in v[-5:]:
             lastSlash = v.rfind("/")
             v = v[0:lastSlash]
@@ -47,8 +49,33 @@ def cleanFiles(folderDictionary):
             shutil.rmtree(v)
         else:
             partsRemaining = partsRemaining + 1
+            newFolderDict[k] = v
 
-    return partsDeleted, partsRemaining
+    return partsDeleted, partsRemaining, newFolderDict
+
+
+#takes in a folderdictionary, goes into all the folders inside, and deletes any internal files which are less than 2 kb
+def cleanSlices(folderDictionary):
+
+    for k, v in folderDictionary.items():
+        fileList = os.listdir(v)
+        #print(fileList)
+        f = []
+        for (dirpath, dirnames, filenames) in walk(v):
+            f.extend(filenames)
+            #print(filenames)
+            #print(str(v) + str(filenames))
+            break
+
+        for fileName in f:
+            fp = os.path.join(dirpath, fileName)
+            # skip if it is symbolic link
+            if not os.path.islink(fp):
+                size = os.path.getsize(fp)
+                if size <= 2048:
+                    os.remove(fp)
+
+
 
 
 
