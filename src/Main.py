@@ -22,7 +22,7 @@ import shutil
 
 import BuildingDirectories
 import WritingFiles
-import fileCleanup
+import FileCleanup
 #import SummaryStatisticsOfParts
 
 # print("Example directory path: \nC:/Users/maxah/Documents/CDME/Sept 9 2019 TDMS Parts/TDMS\n")
