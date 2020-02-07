@@ -55,7 +55,7 @@ def cleanFolders(folderDictionary):
 
 
 #takes in a folderdictionary, goes into all the folders inside, and deletes any internal files which are less than 2 kb
-def cleanSlices(folderDictionary):
+def cleanSlices(folderDictionary, minSize=2048):
 
     for k, v in folderDictionary.items():
         fileList = os.listdir(v)
@@ -72,7 +72,7 @@ def cleanSlices(folderDictionary):
             # skip if it is symbolic link
             if not os.path.islink(fp):
                 size = os.path.getsize(fp)
-                if size <= 2048:
+                if size <= minSize:
                     os.remove(fp)
 
 
